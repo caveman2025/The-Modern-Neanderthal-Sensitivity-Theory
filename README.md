@@ -1,4 +1,4 @@
-# Combined and Expanded "Modern Neanderthal Sensitivity Theory"
+# The "Modern Neanderthal Sensitivity Theory"
 
 ## Overview
 
