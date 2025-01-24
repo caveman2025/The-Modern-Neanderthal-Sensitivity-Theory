@@ -122,11 +122,12 @@ Modern assumptions of **uniform human biology**—particularly in **dietary and 
 
 ### 7\. Implications for Individuals with Higher Amounts of Neanderthal DNA
 
-Individuals with **higher percentages of Neanderthal DNA**—specifically those with **double the average amount**—may exhibit unique physiological traits linked to their genetic inheritance. Emerging evidence suggests that this subgroup may be predisposed to certain **autonomic and connective tissue disorders**, including:
+Individuals with **higher percentages of Neanderthal DNA**—specifically those with **double the average amount**—may exhibit unique physiological traits linked to their genetic inheritance. Emerging evidence suggests that this subgroup may be predisposed to certain **mental health (ASD/ADHD/Anxiety), autonomic and connective tissue disorders**, including:
 
 - **Postural Orthostatic Tachycardia Syndrome (POTS)**: A condition involving dysregulated blood flow and autonomic nervous system function.
 - **Mast Cell Activation Syndrome (MCAS)**: Characterized by overactive immune responses, often causing allergic-like symptoms and inflammation.
 - **Hypermobile Ehlers-Danlos Syndrome (hEDS)**: A connective tissue disorder causing joint hypermobility, chronic pain, and fragile connective tissues.
+- **Autism Spectrum Disorder and Associated Neurodivergent Conditions**
 
 These conditions often co-occur, suggesting a **shared genetic or physiological basis** that could be influenced by Neanderthal-derived traits.
 
