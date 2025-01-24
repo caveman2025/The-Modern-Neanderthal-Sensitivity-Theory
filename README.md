@@ -373,7 +373,7 @@ The study aims to identify **genetic correlations** and environmental factors th
 
 ## **Conclusion**
 
-This expanded study aims to bridge gaps in understanding how Neanderthal DNA contributes to modern health conditions, offering insights into personalized medicine, dietary adaptation, and neurodivergent traits. Whether conducted through a research hospital or open-source tools, the findings could reshape our understanding of genetic diversity and its impact on health.
+This study aims to bridge gaps in understanding how Neanderthal DNA contributes to modern health conditions, offering insights into personalized medicine, dietary adaptation, and neurodivergent traits. Whether conducted through a research hospital or open-source tools, the findings could reshape our understanding of genetic diversity and its impact on health.
 
 &nbsp;
 
