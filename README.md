@@ -40,14 +40,14 @@ Modern assumptions of **uniform human biology**—particularly in **dietary and 
     - Barrel-shaped ribcages and larger lungs for efficient oxygen use in cold, low-oxygen environments.
     - Enhanced thermoregulation through a higher metabolic baseline.
 - **Immune System Strength**:
-    - Neanderthal DNA influences Toll-like receptor (TLR) genes, bolstering defenses against bacterial and viral infections. ([Source](https://www.nature.com/articles/news.2015.184))
+    - Neanderthal DNA influences Toll-like receptor (TLR) genes, bolstering defenses against bacterial and viral infections. ([Source](https://www.cell.com/ajhg/fulltext/S0002-9297%2815%2900486-3?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0002929715004863%3Fshowall%3Dtrue "https://www.cell.com/ajhg/fulltext/S0002-9297(15)00486-3?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0002929715004863%3Fshowall%3Dtrue"))🔗
 - **Vitamin D Synthesis**:
     - Genetic adaptations to low-sunlight regions, aiding in bone health and immune function.
 
 #### **Denisovan Contributions**:
 
 - **High-Altitude Adaptations**:
-    - Inherited EPAS1 gene variants allow efficient oxygen utilization at high altitudes, benefiting populations in the Himalayas and Tibet. ([Source](https://www.nature.com/articles/nature13408))
+    - Inherited EPAS1 gene variants allow efficient oxygen utilization at high altitudes, benefiting populations in the Himalayas and Tibet. ([Source](https://www.nature.com/articles/nature13408))🔗
 - **Immune System Variations**:
     - Genes improving resistance to endemic pathogens in Southeast Asia and Oceania.
 
@@ -131,26 +131,67 @@ Individuals with **higher percentages of Neanderthal DNA**—specifically those 
 
 These conditions often co-occur, suggesting a **shared genetic or physiological basis** that could be influenced by Neanderthal-derived traits.
 
-### Hypothesized Neanderthal Gene Associations
+### **Known Neanderthal Gene Associations for Autism/ADHD/EDS/POTS/MCAS**
 
-&nbsp;
-
-Research has yet to conclusively link Neanderthal DNA to these disorders, but **specific Neanderthal gene variants**—identified in individuals with higher Neanderthal DNA percentages—may offer clues. These include:
-
-1.  **The "Elite Athlete" Gene**:
+- **"Enrichment of a subset of Neanderthal polymorphisms in autistic probands" (2024):**
     
-    - **Implications**: This gene, associated with enhanced musculoskeletal performance and endurance, may contribute to hypermobility in individuals with hEDS. While beneficial for physical activity, it may also lead to joint instability and increased risk of connective tissue injuries.
-    - **Connection to POTS**: Enhanced cardiovascular responses may predispose individuals to autonomic dysregulation under certain conditions, contributing to POTS.
-2.  **The "Viking Disease" Gene (Dupuytren's Contracture)**:
+    - *Summary:* This study provides strong evidence that certain rare and common Neanderthal-derived alleles are enriched in individuals with autism, suggesting an active role of these genetic variants in autism susceptibility.
+    - *🔗:* [Nature](https://www.nature.com/articles/s41380-024-02593-7)
+- **"Study implicates Neanderthal DNA in autism susceptibility" (2024):**
     
-    - **Implications**: This gene predisposes individuals to fibrotic conditions, such as Dupuytren’s contracture, characterized by thickening of connective tissues. It may also play a role in abnormal collagen structure or function, a hallmark of hEDS.
-    - **Connection to MCAS**: Altered connective tissue may influence mast cell activity, heightening sensitivity to allergens and inflammation.
-3.  **The Gene for Red Hair (MC1R Variant)**:
-    
-    - **Implications**: This gene, linked to red hair and pale skin, also influences pain perception and immune regulation. Individuals with this gene may have heightened inflammatory responses, increasing the risk of MCAS-like symptoms.
-    - **Connection to Sensory Processing**: Alterations in pain sensitivity and autonomic regulation may contribute to overlapping POTS and hEDS symptoms.
+    - *Summary:* Researchers found that specific Neanderthal genetic variants contribute to autism susceptibility, highlighting an ancient genetic influence on the condition.
+    - *🔗:* [Clemson News](https://news.clemson.edu/study-implicates-neanderthal-dna-in-autism-susceptibility/)
 
-### Current Challenges and Research Needs
+* * *
+
+### **Known Genes Linked to POTS/MCAS/EDS**
+
+- **TPSAB1 (α-Tryptase Gene Duplication):** Associated with increased tryptase production, which is linked to MCAS.
+    
+    - *🔗:* [Nature Genetics](https://www.nature.com/articles/ng.3696)
+- **Unknown Gene Mutation:** Researchers have identified a gene mutation associated with hypermobile Ehlers-Danlos syndrome (hEDS).
+    
+    - *🔗:* [MUSC News Center](https://web.musc.edu/about/news-center/2021/07/14/musc-researchers-announce-gene-mutation-discovery-associated-with-eds-ehlers-danlos)
+
+* * *
+
+### **Hypothesized Neanderthal Gene Associations for EDS/POTS/MCAS**
+
+- **HLA-B:** Associated with autoimmune disease risk, which overlaps with some MCAS and POTS presentations.
+    
+- **IL2RA:** Plays a role in immune response regulation, potentially linked to MCAS.
+    
+- **TGFB2:** Theorized to influence connective tissue health, with potential links to hypermobility in EDS.
+    
+- **TNXB:** Associated with connective tissue disorders, theorized links to EDS.
+    
+
+* * *
+
+### **Additional Theorized Gene Associations**
+
+- **ACTN3 (The "Elite Athlete" Gene):**
+    
+    - *Implications:* This gene is associated with enhanced musculoskeletal performance and endurance, which may contribute to hypermobility in individuals with hEDS. While beneficial for physical activity, it may also lead to joint instability and an increased risk of connective tissue injuries.
+    - *Connection to POTS:* Enhanced cardiovascular responses may predispose individuals to autonomic dysregulation under certain conditions, contributing to POTS.
+- **NOS1AP (The "Viking Disease" Gene):**
+    
+    - *Implications:* This gene predisposes individuals to fibrotic conditions, such as Dupuytren’s contracture, characterized by thickening of connective tissues. It may also play a role in abnormal collagen structure or function, a hallmark of hEDS.
+    - *Connection to MCAS:* Altered connective tissue may influence mast cell activity, heightening sensitivity to allergens and inflammation.
+- **MC1R (The Gene for Red Hair):**
+    
+    - *Implications:* This gene, linked to red hair and pale skin, also influences pain perception and immune regulation. Individuals with this gene may have heightened inflammatory responses, increasing the risk of MCAS-like symptoms.
+    - *Connection to Sensory Processing:* Alterations in pain sensitivity and autonomic regulation may contribute to overlapping POTS and hEDS symptoms.
+
+* * *
+
+### Conclusion
+
+Individuals with **higher amounts of Neanderthal DNA** may represent a unique subgroup at increased risk for **POTS, MCAS, and hEDS** due to Neanderthal-derived genetic traits. Variants like the **elite athlete gene**, the **Viking disease gene**, and the **red hair gene** provide valuable starting points for research. By investigating these connections further, we can improve diagnostic criteria, develop targeted therapies, and deepen our understanding of how ancient genetics influence modern health.
+
+* * *
+
+## 🧩Current Challenges and Research Needs
 
 #### **A. Lack of Genetic Testing for hEDS**:
 
@@ -176,46 +217,7 @@ Given the significant overlap of symptoms in POTS, MCAS, and hEDS and the potent
 - Developing a **genetic panel** targeting Neanderthal gene variants associated with connective tissue, immune regulation, and autonomic nervous system function.
 - Educating healthcare providers about the potential impact of Neanderthal DNA on chronic health conditions, encouraging earlier diagnosis and intervention.
 
-### Conclusion
-
-Individuals with **higher amounts of Neanderthal DNA** may represent a unique subgroup at increased risk for **POTS, MCAS, and hEDS** due to Neanderthal-derived genetic traits. Variants like the **elite athlete gene**, the **Viking disease gene**, and the **red hair gene** provide valuable starting points for research. By investigating these connections further, we can improve diagnostic criteria, develop targeted therapies, and deepen our understanding of how ancient genetics influence modern health.
-
-## 📝Sources
-
-1.  **Neanderthal Contributions to Human Genetics**:
-    
-    - [Wikipedia: Neanderthal Anatomy](https://en.wikipedia.org/wiki/Neanderthal_anatomy)
-    - [Nature: Neanderthal DNA and Modern Immunity](https://www.nature.com/articles/news.2015.184)
-2.  **Denisovan Contributions**:
-    
-    - [Nature: High-Altitude Adaptations](https://www.nature.com/articles/nature13408)
-3.  **Post-LGM Evolutionary Pressures**:
-    
-    - [ScienceDirect: Climate Change and Human Evolution](https://www.sciencedirect.com/topics/earth-and-planetary-sciences/climate-change)
-4.  **Neanderthal Contributions to Human Genetics**:
-    
-    - [Wikipedia: Neanderthal Anatomy](https://en.wikipedia.org/wiki/Neanderthal_anatomy)
-    - [Nature: The Impact of Neanderthal DNA](https://www.nature.com/articles/news.2015.184)
-5.  **Post-LGM Evolutionary Pressures**:
-    
-    - [ScienceDirect: Climate Change and Human Evolution](https://www.sciencedirect.com/topics/earth-and-planetary-sciences/climate-change)
-    - [NIH: Stress-Induced Genetic Changes](https://pubmed.ncbi.nlm.nih.gov/18155650/)
-6.  **Nutritional Mismatches and Chronic Disease**:
-    
-    - [Harvard School of Public Health: Diet and Inflammation](https://www.hsph.harvard.edu/nutritionsource/anti-inflammatory-diet/)
-7.  **Differences in Taste between Groups**:
-    
-    - [The origins of gazpacho and paella](https://www.ocala.com/story/news/2007/02/21/the-origins-of-gazpacho-and-paella/31187142007/)
-8.  **Importance of Biodiversity** :
-    
-    - [What we can learn from the near death of the banana](https://time.com/5730790/banana-panama-disease/)
-9.  **Evidence of Local Dietary Adaptations as Part of Public Health Policy**:
-    
-    - [Siri Lanka Health Department Food Guidlines](https://nutrition.health.gov.lk/wp-content/uploads/2021/10/English-book-Final.pdf)
-
-* * *
-
-# 🧪👩‍🔬Proposed Study for Additional Research👨‍🔬
+# 🧪👩‍🔬 A Proposed Study for Additional Research👨‍🔬
 
 ## **Study Goal**
 
@@ -370,13 +372,36 @@ The study aims to identify **genetic correlations** and environmental factors th
 - **Mental Health Interventions**:
     - Create stress-management programs tailored to individuals with heightened Neanderthal-derived sensitivities.
 
+&nbsp;
+
 * * *
 
-## **Conclusion**
+## 📝Sources
 
-This study aims to bridge gaps in understanding how Neanderthal DNA contributes to modern health conditions, offering insights into personalized medicine, dietary adaptation, and neurodivergent traits. Whether conducted through a research hospital or open-source tools, the findings could reshape our understanding of genetic diversity and its impact on health.
-
-&nbsp;
+1.  **Neanderthal Contributions to Human Genetics**:
+    
+    - [Wikipedia: Neanderthal Anatomy](https://en.wikipedia.org/wiki/Neanderthal_anatomy)
+    - [Modern humans inherited viral defenses from Neanderthals](https://news.stanford.edu/stories/2018/10/modern-humans-inherited-viral-defenses-neanderthals)
+    - [The Contribution of Neanderthals to Phenotypic Variation in Modern Humans](https://pmc.ncbi.nlm.nih.gov/articles/PMC5630192/)
+    - [Neanderthal-Derived Genetic Variation is Associated with Functional Connectivity in the Brains of Living Humans](https://pmc.ncbi.nlm.nih.gov/articles/PMC7891204/)
+2.  **Denisovan Contributions**:
+    
+    - [Nature: High-Altitude Adaptations](https://www.nationalgeographic.com/culture/article/high-altitude-adaptations-evolution)
+3.  **Post-LGM Evolutionary Pressures**:
+    
+    - [Climate Change and Postglacial Human Dispersals in Southeast Asia](https://academic.oup.com/mbe/article/25/6/1209/1134230)
+4.  **Nutritional Mismatches and Chronic Disease**:
+    
+    - [Harvard School of Public Health: Diet and Inflammation](https://www.hsph.harvard.edu/nutritionsource/anti-inflammatory-diet/)
+5.  **Differences in Taste between Groups**:
+    
+    - [The origins of gazpacho and paella](https://www.ocala.com/story/news/2007/02/21/the-origins-of-gazpacho-and-paella/31187142007/)
+6.  **Importance of Biodiversity** :
+    
+    - [What we can learn from the near death of the banana](https://time.com/5730790/banana-panama-disease/)
+7.  **Evidence of Local Dietary Adaptations as Part of Public Health Policy**:
+    
+    - [Siri Lanka Health Department Food Guidlines](https://nutrition.health.gov.lk/wp-content/uploads/2021/10/English-book-Final.pdf)
 
 * * *
 
@@ -390,6 +415,5 @@ This study aims to bridge gaps in understanding how Neanderthal DNA contributes 
 - Genetic/racial differences in lactose intolerance and alcohol flush reaction.
 - Cultural dietary adaptations, such as spicy Sri Lankan food and gazpacho.
 - Real-life examples of nutrition tailored to local populations, including the Sri Lankan Ministry of Health’s food plate model.
-
 
 * * *
