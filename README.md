@@ -365,6 +365,8 @@ The study aims to identify **genetic correlations** and environmental factors th
 
 ## **6\. Future Directions**
 
+- **Further Study to Validate Findings**:
+    - Create additional studies or testing to validate results with the goal of better personalized health outcomes due to better genomic knowledge.
 - **Personalized Healthcare**:
     - Develop tailored treatment protocols based on genetic predispositions.
 - **Dietary Recommendations**:
