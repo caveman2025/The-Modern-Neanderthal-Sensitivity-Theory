@@ -411,7 +411,7 @@ The study aims to identify **genetic correlations** and environmental factors th
 
 **🟤Ginny** for being my soul mate, best friend, and my rock. For never giving up on her own health challenges, always striving for feeling better than the status quo. These ideas would never have come to fruition were it not for your unrelenting quest for better health and your unconditional love, patience and understanding. Thank you for allowing me the honor of being along for the ride.
 
-**🟤Sadoff** for their insights, time, and thoughtfulness. And for contributing the following additional points, references and sources:
+**🟤Sadoff** for their insights, time, thoughtfulness, guidance, and scientific expertise. And for contributing the following additional points, references and sources:
 
 - The importance of biodiversity, as illustrated by the near-death of the banana.
 - Genetic/racial differences in lactose intolerance and alcohol flush reaction.
