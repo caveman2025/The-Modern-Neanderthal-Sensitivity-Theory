@@ -258,7 +258,7 @@ However, none of this matters if we can't make it available globally and easy to
 
 ## Usage
 
-1.  **Download** or **clone** this repository.
+1.  [**Download the latest nd-gene-checker-vX.X-alpha.py from releases**](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/releases) or from this repo
 2.  **Run** the script (e.g., `python Prelim-ND-Sensitivity-Report.py`).
 3.  **Enter** the path to your 23andMe `.txt` file when prompted.
 
