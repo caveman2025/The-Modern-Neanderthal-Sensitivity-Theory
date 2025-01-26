@@ -16,6 +16,7 @@
     - [6️⃣ Practical Implications and Solutions](#6-practical-implications-and-solutions)
     - [7️⃣ Implications for Individuals with Higher Amounts of Neanderthal DNA](#7-implications-for-individuals-with-higher-amounts-of-neanderthal-dna)
 - [🧩 Current Challenges and Research Needs](#current-challenges-and-research-needs)
+- [🧬Neanderthal DNA Checker Script (ALPHA](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory#neanderthal-gene-checker-python-script)
 - [🧪 Proposed Study for Additional Research](#a-proposed-study-for-additional-research)
     - [📖 Study Design](#1-study-design)
     - [🎯 Study Objectives](#2-study-objectives)
@@ -241,9 +242,9 @@ Given the significant overlap of symptoms in POTS, MCAS, and hEDS and the potent
 
 &nbsp;
 
-# 🧬Neanderthal Gene Checker (Python Script)
+## 🧬Neanderthal Gene Checker (Python Script)
 
-## *⚠️Purpose & Disclaimer⚠️*
+ *⚠️Purpose & Disclaimer⚠️*
 
 ***This script is a proof of concept for a low- or no-cost approach to explore potential genetic indicators related to conditions mentioned in the Python script. It is not a substitute for professional medical advice, diagnosis, or treatment. Use of this tool comes without any warranty, expressed or implied, and no guarantees of accuracy or fitness for a particular purpose.***
 
