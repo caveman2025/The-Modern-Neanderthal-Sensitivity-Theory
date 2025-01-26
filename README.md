@@ -248,6 +248,8 @@ Given the significant overlap of symptoms in POTS, MCAS, and hEDS and the potent
 
 ***This script is a proof of concept for a low- or no-cost approach to explore potential genetic indicators related to conditions mentioned in the Python script. It is not a substitute for professional medical advice, diagnosis, or treatment. Use of this tool comes without any warranty, expressed or implied, and no guarantees of accuracy or fitness for a particular purpose.***
 
+However, none of this matters if we can't make it available globally and easy to use. To quote John Green, ***"Disease only treats humans equally when our social orders treat humans equally"***. The aim here is better health and a better world for all and free, transparent, and accessible personalized health research helps get us there. 
+
 ## Requirements
 
 - **Python 3.7+**
