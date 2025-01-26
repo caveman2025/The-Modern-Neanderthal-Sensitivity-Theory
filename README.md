@@ -1,6 +1,28 @@
-* * *
-
 # The "Modern Neanderthal Sensitivity Hypothesis"
+
+<details open="open"><summary>🧭Click to Expand Navigation Menu🧭</summary>
+
+- [🔎 Overview](#overview)
+- [📌 Key Points of the Hypothesis](#key-points-of-the-hypothesis)
+    - [1️⃣ The Last Glacial Maximum and Evolutionary Pressures](#1-the-last-glacial-maximum-and-evolutionary-pressures)
+    - [2️⃣ Genetic Contributions from Neanderthals, Denisovans, and Others](#2-genetic-contributions-from-neanderthals-denisovans-and-others)
+        - [🧬 Neanderthal Contributions](#neanderthal-contributions)
+        - [🧬 Denisovan Contributions](#denisovan-contributions)
+        - [🧬 Other Hominins](#other-hominins)
+    - [3️⃣ Regional Adaptations and Nutritional Diversity](#3-regional-adaptations-and-nutritional-diversity)
+    - [4️⃣ Chronic Inflammatory Disease and Nutritional Mismatches](#4-chronic-inflammatory-disease-and-nutritional-mismatches)
+        - [⚠️ Key Drivers of Inflammation](#key-drivers-of-inflammation)
+    - [5️⃣ Cooperation as the Key to Survival and Progress](#5-cooperation-as-the-key-to-survival-and-progress)
+    - [6️⃣ Practical Implications and Solutions](#6-practical-implications-and-solutions)
+    - [7️⃣ Implications for Individuals with Higher Amounts of Neanderthal DNA](#7-implications-for-individuals-with-higher-amounts-of-neanderthal-dna)
+- [🧩 Current Challenges and Research Needs](#current-challenges-and-research-needs)
+- [🧪 Proposed Study for Additional Research](#a-proposed-study-for-additional-research)
+    - [📖 Study Design](#1-study-design)
+    - [🎯 Study Objectives](#2-study-objectives)
+- [📝 Sources](#sources)
+- [🦸‍♀️ Credits and Contributors](#credits-and-contributors)
+
+</details>
 
 ## 🔎Overview
 
@@ -217,6 +239,38 @@ Given the significant overlap of symptoms in POTS, MCAS, and hEDS and the potent
 - Developing a **genetic panel** targeting Neanderthal gene variants associated with connective tissue, immune regulation, and autonomic nervous system function.
 - Educating healthcare providers about the potential impact of Neanderthal DNA on chronic health conditions, encouraging earlier diagnosis and intervention.
 
+&nbsp;
+
+# 🧬Neanderthal Gene Checker (Python Script)
+
+## *⚠️Purpose & Disclaimer⚠️*
+
+***This script is a proof of concept for a low- or no-cost approach to explore potential genetic indicators related to conditions mentioned in the Python script. It is not a substitute for professional medical advice, diagnosis, or treatment. Use of this tool comes without any warranty, expressed or implied, and no guarantees of accuracy or fitness for a particular purpose.***
+
+## Requirements
+
+- **Python 3.7+**
+- **23andMe Raw Data File** (`.txt` export)
+
+## Usage
+
+1.  **Download** or **clone** this repository.
+2.  **Run** the script (e.g., `python Prelim-ND-Sensitivity-Report.py`).
+3.  **Enter** the path to your 23andMe `.txt` file when prompted.
+
+## Output
+
+- **HTML Report** (`Prelim-ND-Sensitivity-Report.html`) and **JSON** (`Prelim-ND-Sensitivity-Report.json`) saved to your **Downloads** folder.
+- The HTML report **opens automatically**, showing:
+    - Genes of interest, rsIDs, conditions, and whether each SNP was **Found** (green) or **Missing** (red).
+
+## Example HTML Output
+![Report Example](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/blob/main/.github/report.png?raw=true "Report Example")
+
+&nbsp;
+
+**Use responsibly, and consult qualified healthcare professionals for personalized medical guidance.**
+
 # 🧪👩‍🔬 A Proposed Study for Additional Research👨‍🔬
 
 ## **Study Goal**
@@ -409,7 +463,7 @@ The study aims to identify **genetic correlations** and environmental factors th
 
 ## 🦸‍♀️Credits and Contributors🦸‍♂️
 
-**🟤Ginny** for being my soul mate, best friend, and my rock. For never giving up on her own health challenges, always striving for feeling better than the status quo. These ideas would never have come to fruition were it not for your unrelenting quest for better health and your unconditional love, patience and understanding. Thank you for allowing me the honor of being along for the ride.
+**🟤Ginny** for being my soul mate, best friend, and my rock. For never giving up on her own health challenges, always striving for feeling better than the status quo. These ideas would never have come to fruition were it not for your unrelenting quest for better health and your unconditional love, patience and understanding. Thank you for allowing me the honor of being along for the ride.
 
 **🟤Sadoff** for their insights, time, thoughtfulness, guidance, and scientific expertise. And for contributing the following additional points, references and sources:
 
