@@ -1,6 +1,6 @@
 # The "Modern Neanderthal Sensitivity Hypothesis"
 
-<details open="open"><summary>🧭Click to Expand Navigation Menu🧭</summary>
+<details open="open"><summary>🧭Click to Toggle Navigation Menu🧭</summary>
 
 - [🔎 Overview](#overview)
 - [📌 Key Points of the Hypothesis](#key-points-of-the-hypothesis)
