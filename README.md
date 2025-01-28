@@ -254,11 +254,11 @@ However, none of this matters if we can't make it available globally and easy to
 ## Requirements
 
 - **Python 3.7+**
-- **23andMe Raw Data File** (`.txt` export)
+- **23andMe Raw Data File** (`.txt` export) *note* this may work with other dna services if the raw data output is the same. YMMV.
 
 ## Usage
 
-1.  [**Download the latest nd-gene-checker-vX.X-alpha.py from releases**](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/releases) or from this repo
+1.  [**Download nd-gene-checker-vX.X-alpha.py from this repo**]([https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/releases](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/raw/refs/heads/main/nd-gene-checker-v0.1-alpha.py)) 
 2.  **Run** the script (e.g., `python Prelim-ND-Sensitivity-Report.py`).
 3.  **Enter** the path to your 23andMe `.txt` file when prompted.
 
