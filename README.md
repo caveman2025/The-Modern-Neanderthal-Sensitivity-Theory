@@ -1,7 +1,6 @@
 # The "Modern Neanderthal Sensitivity Hypothesis"
 
-<details>
-<summary>🧭Click to Expand Navigation🧭</summary>
+<details><summary>🧭Click to Expand Navigation🧭</summary>
 
 - [🔎 Overview](#overview)
 - [📌 Key Points of the Hypothesis](#key-points-of-the-hypothesis)
@@ -245,11 +244,11 @@ Given the significant overlap of symptoms in POTS, MCAS, and hEDS and the potent
 
 ## 🧬Neanderthal Gene Checker (Python Script)
 
- *⚠️Purpose & Disclaimer⚠️*
+*⚠️Purpose & Disclaimer⚠️*
 
 ***This script is a proof of concept for a low- or no-cost approach to explore potential genetic indicators related to conditions mentioned in the Python script. It is not a substitute for professional medical advice, diagnosis, or treatment. Use of this tool comes without any warranty, expressed or implied, and no guarantees of accuracy or fitness for a particular purpose.***
 
-However, none of this matters if we can't make it available globally and easy to use. To quote John Green, ***"Disease only treats humans equally when our social orders treat humans equally"***. The aim here is better health and a better world for all and free, transparent, and accessible personalized health research helps get us there. 
+However, none of this matters if we can't make it available globally and easy to use. To quote John Green, ***"Disease only treats humans equally when our social orders treat humans equally"***. The aim here is better health and a better world for all and free, transparent, and accessible personalized health research helps get us there.
 
 ## Requirements
 
@@ -259,7 +258,7 @@ However, none of this matters if we can't make it available globally and easy to
 ## Usage
 
 1.  [**Download nd-gene-checker-vX.X-alpha.py from this repo**](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/raw/refs/heads/main/nd-gene-checker-v0.1-alpha.py)
-2.  **Run** the script (e.g., `python Prelim-ND-Sensitivity-Report.py`).
+2.  **Run** the script (e.g., `python nd-gene-checker-v.x.x-alpha.py`).
 3.  **Enter** the path to your 23andMe `.txt` file when prompted.
 
 ## Output
@@ -269,6 +268,7 @@ However, none of this matters if we can't make it available globally and easy to
     - Genes of interest, rsIDs, conditions, and whether each SNP was **Found** (green) or **Missing** (red).
 
 ## Example HTML Output
+
 ![Report Example](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/blob/main/.github/report.png?raw=true "Report Example")
 
 &nbsp;
@@ -444,6 +444,11 @@ The study aims to identify **genetic correlations** and environmental factors th
     - [Modern humans inherited viral defenses from Neanderthals](https://news.stanford.edu/stories/2018/10/modern-humans-inherited-viral-defenses-neanderthals)
     - [The Contribution of Neanderthals to Phenotypic Variation in Modern Humans](https://pmc.ncbi.nlm.nih.gov/articles/PMC5630192/)
     - [Neanderthal-Derived Genetic Variation is Associated with Functional Connectivity in the Brains of Living Humans](https://pmc.ncbi.nlm.nih.gov/articles/PMC7891204/)
+    - Dannemann, M. (2021). *The population-specific impact of Neandertal introgression on human disease.* Genome Biology and Evolution. https://doi.org/10.1093/gbe/evaa250
+    - Findley, A. S., et al. (2021). *A signature of Neanderthal introgression on molecular mechanisms of environmental responses.* PLOS Genetics. https://doi.org/10.1371/journal.pgen.1009493
+    - Khrameeva, E., et al. (2014). *Neanderthal ancestry drives evolution of lipid catabolism in contemporary Europeans.* Nature Communications. https://doi.org/10.1038/ncomms4584
+    - McArthur, E., et al. (2020). *Quantifying the contribution of Neanderthal introgression to the heritability of complex traits.* Nature Communications. https://doi.org/10.1101/2020.06.08.140087
+    - Reilly, P., et al. (2022). *The contribution of Neanderthal introgression to modern human traits.* Current Biology. https://doi.org/10.1016/j.cub.2022.08.027
 2.  **Denisovan Contributions**:
     
     - [Nature: High-Altitude Adaptations](https://www.nationalgeographic.com/culture/article/high-altitude-adaptations-evolution)
