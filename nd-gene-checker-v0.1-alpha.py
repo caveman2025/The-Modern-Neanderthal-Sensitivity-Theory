@@ -1,327 +1,368 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import csv
 import os
-import json
 import webbrowser
 import hashlib
-from collections import defaultdict
+import json
 
 # --------------------------------------------------
-# Embedded CSV data for the relevant SNPs:
+# Updated Confidence Weighting System
 # --------------------------------------------------
-CSV_DATA = """Condition(s),Gene,rsID,Evidence/Status,Ancestry Note,Notes/References
-"ALS, MS, Lupus, RA",TP53,rs1042522,"Arg72Pro variant with cancer relevance, minimal direct link here",Claimed Neanderthal,"Occasionally studied in neurodegeneration or autoimmune, but data are not conclusive."
-"MCAS, Autism/ADHD, POTS",ADRA1A,rs1048101,Medium Confidence,Claimed Neanderthal,"Impacts adrenergic receptors, potentially affecting autonomic function."
-"EDS/hEDS, RA, Lupus",TNXB,rs1063325,Medium Confidence,Claimed Neanderthal,Implicated in classical-like EDS and rare connective tissue disorders.
-Taste Perception,TAS2R38,rs1080985,Low Confidence,Claimed Neanderthal,TAS2R38 variant associated with bitter taste perception; may influence food preferences.
-Skin Pigmentation,PRSS53,rs11150614,Low Confidence,Claimed Neanderthal,PRSS53 variant linked to skin pigmentation and possibly autoimmune conditions.
-"MCAS, Autism/ADHD",TPSAB1,rs113578744,High Confidence,Claimed Neanderthal,"Affects tryptase levels, possibly influencing MCAS-like symptoms."
-"MS, Lupus, RA, Fibromyalgia",IFITM3,rs12252,Preliminary/unconfirmed; known for infection susceptibility,Claimed Neanderthal,IFITM3 primarily studied for viral infections (influenza/COVID-19). Autoimmune/fibro links are less established.
-EDS/hEDS,COL5A1,rs12721431,Preliminary/unconfirmed; possible collagen regulation SNP,Claimed Neanderthal,"COL5A1 is central in classical EDS; May influence collagen regulation, with possible links to EDS."
-Skin/Eye Pigmentation,HERC2,rs12896399,Low Confidence,Claimed Neanderthal,HERC2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility.
-Skin Pigmentation,SLC24A5,rs1393350,Low Confidence,Claimed Neanderthal,SLC24A5 variant linked to skin pigmentation and possibly autoimmune conditions.
-"MCAS, Autism/ADHD",TPSAB1,rs140863677,Strong association with hereditary alpha tryptasemia,Claimed Neanderthal,"Found in individuals with elevated tryptase levels; associated with MCAS-like symptoms. Strongly linked to hereditary alpha tryptasemia, a trait inherited from Neanderthals."
-"POTS, MCAS, Lupus, RA",HLA-B,rs144921697,Preliminary/unconfirmed; MHC region well known in autoimmunity,Claimed Neanderthal,"HLA-B is implicated in autoimmune disease, but specific SNP evidence is less established for POTS/MCAS."
-"POTS, MCAS, Lupus, RA",HLA-B,rs17878979,Preliminary/unconfirmed; MHC region well known in autoimmunity,Claimed Neanderthal,Similar commentary as rs144921697. MHC variants can influence broad autoimmunity risk.
-Skin/Eye Pigmentation,OCA2,rs1800401,Low Confidence,Claimed Neanderthal,OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility.
-Skin/Eye Pigmentation,OCA2,rs1800407,Low Confidence,Claimed Neanderthal,OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility.
-Skin/Eye Pigmentation,OCA2,rs1800414,Low Confidence,Claimed Neanderthal,OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility.
-"EDS/hEDS, Fibromyalgia",TGFB1,rs1800469,Preliminary/unconfirmed,Claimed Neanderthal,Promoter polymorphism C-509T in TGFB1; some small studies tie it to fibrosis or chronic pain. Not definitively validated for hEDS.
-"Autism/ADHD, MCAS, Fibromyalgia",DRD4,rs1800955,"Promoter SNP, ADHD association replicated",Claimed Neanderthal,DRD4 is a well-known ADHD gene shown to influence cognitive traits (especially 7R VNTR). Direct MCAS/fibro link is not widely established.
-"Autism/ADHD, MCAS, Fibromyalgia",MC1R,rs1805007,"Common red-hair variant, minimal direct link to these disorders",Claimed Neanderthal,"MC1R variants sometimes associated with altered pain sensitivity. ‘Neanderthal origin’ is a popular myth, not firmly established."
-"Skin/Hair Pigmentation, Pain Sensitivity",MC1R,rs1805009,Low Confidence,Claimed Neanderthal,MC1R variant linked to skin and hair pigmentation; may influence pain sensitivity.
-"Skin/Hair Pigmentation, Pain Sensitivity",MC1R,rs1805015,Low Confidence,Claimed Neanderthal,MC1R variant associated with skin and hair pigmentation; may influence pain sensitivity.
-"EDS/hEDS, POTS, Autism/ADHD",ACTN3,rs1815739,"Well-known ‘R577X’ athlete variant, minimal EDS/POTS evidence",Claimed Viking,"ACTN3 influences fast-twitch muscle fibers. No strong mainstream data linking it to EDS, POTS, or neurodevelopmental disorders."
-"MCAS, Autism/ADHD",TPSAB1,rs1861759,High Confidence,Claimed Neanderthal,"Associated with hereditary alpha tryptasemia, linked to mast cell activation."
-"MS, Lupus, RA, Fibromyalgia",HSP70 (HSPA1A),rs2075800,Preliminary/unconfirmed,Claimed Neanderthal,Heat shock proteins can modulate inflammation. Some studies link HSP70 SNPs to autoimmune severity. HSP70 variant linked to inflammatory response modulation.
-"MCAS, Autism/ADHD, MS",IL2RA,rs2104286,"Known association with autoimmune conditions (e.g., T1D, MS)",Claimed Neanderthal,IL2RA (CD25) is crucial in immune regulation. Clear link with MS; MCAS/autism associations are not well established.
-"MCAS, Autism/ADHD, MS",IL2RA,rs2104286,Medium Confidence,Claimed Neanderthal,Associated with autoimmune conditions such as multiple sclerosis.
-Skin Pigmentation,SLC24A4,rs2228488,Low Confidence,Claimed Neanderthal,SLC24A4 variant associated with skin pigmentation and possibly autoimmune conditions.
-Skin Pigmentation,SLC24A4,rs2229303,Low Confidence,Claimed Neanderthal,SLC24A4 variant linked to skin pigmentation and possibly autoimmune conditions.
-"EDS/hEDS, Fibromyalgia",TGFB2,rs2272785,Preliminary/unconfirmed,Claimed Neanderthal,"TGFB2 variants known in some connective tissue disorders (e.g., Loeys-Dietz), but data for hEDS/fibromyalgia are sparse."
-"EDS/hEDS, Fibromyalgia",TGFB2,rs2272785,Low Confidence,Claimed Neanderthal,Possible role in connective tissue disorders.
-"Autism/ADHD, MCAS, Fibromyalgia",SLC6A4,rs25531,Promoter polymorphism near 5-HTTLPR,Claimed Neanderthal,Involved in serotonin transporter function. Many inconsistent links to neuropsychiatric or pain disorders.
-"Autism/ADHD, MCAS, Fibromyalgia",SLC6A4,rs25531,Medium Confidence,Claimed Neanderthal,Impacts serotonin transporter function.
-"EDS/hEDS, POTS, MCAS",NOS1AP,rs28931567,Preliminary/unconfirmed,Claimed Viking,"Same gene as rs6944656, limited mainstream evidence for EDS, POTS, MCAS association."
-"Autism/ADHD, MCAS, Fibromyalgia",GABRA2,rs3729984,Preliminary/unconfirmed,Claimed Neanderthal,GABRA2 variants studied in addiction/psychiatric traits. Limited data for MCAS/fibro.
-"Autism/ADHD, MCAS, Fibromyalgia",GABRA2,rs3729984,Medium Confidence,Claimed Neanderthal,GABRA2 variant studied for psychiatric and addiction traits.
-"Autism/ADHD, MCAS, Fibromyalgia",COMT,rs4680,Widely studied in psychiatric/pain contexts,Claimed Neanderthal,"Val158Met influences dopamine metabolism, pain, cognition. Some archaic haplotypes in COMT, but details remain unclear."
-"Autism/ADHD, MCAS, Fibromyalgia",COMT,rs4680,High Confidence,Claimed Neanderthal,Affects dopamine metabolism and cognitive function (COMT gene).
-Skin Pigmentation,OCA2,rs4988235,Low Confidence,Claimed Neanderthal,OCA2 variant linked to skin pigmentation and possibly autoimmune susceptibility.
-"Autism/ADHD, MCAS, Fibromyalgia",MAOA,rs6323,Preliminary/unconfirmed,Claimed Neanderthal,"MAOA Influences monoamine metabolism, possibly affecting ADHD risk. Evidence for direct link to MCAS/fibromyalgia is marginal."
-"EDS/hEDS, RA, Lupus",TNXB,rs652722,Preliminary/unconfirmed,Claimed Neanderthal,Similar to rs1063325. TNXB implicated in rare forms of EDS and autoimmune conditions.
-"EDS/hEDS, RA, Lupus",TNXB,rs652722,Medium Confidence,Claimed Neanderthal,"Similar to rs1063325, with possible roles in EDS and autoimmune conditions."
-"EDS/hEDS, POTS, MCAS",NOS1AP,rs6944656,Preliminary/unconfirmed,Claimed Viking,NOS1AP  ‘Viking Disease’ typically refers to Dupuytren’s contracture. Associated with QT-interval modulation and possible autonomic dysfunction.
-"EDS/hEDS, POTS, Autism/ADHD",ACTN3,rs7308816,Preliminary/unconfirmed,Claimed Viking,"Less-studied ACTN3 SNP. ‘Viking origin’ is speculative, primarily associated with athletic performance studies."
-"EDS/hEDS, POTS, Autism/ADHD",ACTN3,rs7308816,Low Confidence,Claimed Viking,"Variant of ACTN3, linked to fast-twitch muscle fiber efficiency."
-"MS, Lupus, RA, Fibromyalgia",VDR,rs731236,‘BsmI’ variant in vitamin D receptor,Claimed Neanderthal,Vitamin D pathways receptor variant widely studied in autoimmune disorders with possible links found
-"MS, Lupus, RA, Fibromyalgia",VDR,rs731236,Medium Confidence,Claimed Neanderthal,"Vitamin D receptor variant, with possible links to autoimmune conditions."
-"ALS, MS, Lupus, RA",APOE,rs769449,Preliminary/unconfirmed for these autoimmune/ALS contexts,Claimed Neanderthal,"APOE ε4 is well known for Alzheimer’s risk, some small association signals in MS/ALS, not firmly validated."
-"""
+CONFIDENCE_WEIGHTS = {
+    "High Confidence": 4,
+    "Medium Confidence": 3,
+    "Low Confidence": 2,
+}
 
-# Function to parse the CSV data
-def parse_snp_csv(csv_data):
-    snp_dict = {}
-    reader = csv.DictReader(csv_data.strip().splitlines())
-    for row in reader:
-        rs_id = row["rsID"].strip()
-        snp_dict[rs_id] = {
-            "Conditions": row["Condition(s)"].strip(),
-            "Gene": row["Gene"].strip(),
-            "Evidence": row["Evidence/Status"].strip(),
-            "Ancestry": row["Ancestry Note"].strip(),
-            "Notes": row["Notes/References"].strip()
-        }
-    return snp_dict
+# --------------------------------------------------
+# Updated SNP List
+# --------------------------------------------------
+NEANDERTHAL_SNPS = {
+    "rs1861759": ("High Confidence", "Associated with hereditary alpha tryptasemia, linked to mast cell activation."),
+    "rs113578744": ("High Confidence", "Affects tryptase levels, possibly influencing MCAS-like symptoms."),
+    "rs140863677": ("High Confidence", "Strongly linked to hereditary alpha tryptasemia, a trait inherited from Neanderthals."),
+    "rs1048101": ("Medium Confidence", "Impacts adrenergic receptors, potentially affecting autonomic function."),
+    "rs144921697": ("Medium Confidence", "Located in the MHC region, may influence immune response."),
+    "rs17878979": ("Medium Confidence", "Similar to rs144921697, with potential effects on autoimmune susceptibility."),
+    "rs2104286": ("Medium Confidence", "Associated with autoimmune conditions such as multiple sclerosis."),
+    "rs12721431": ("Medium Confidence", "May influence collagen regulation, with possible links to EDS."),
+    "rs2272785": ("Low Confidence", "Possible role in connective tissue disorders."),
+    "rs1800469": ("Low Confidence", "Affects TGF-beta signaling, which plays a role in fibrosis and chronic pain."),
+    "rs1063325": ("Medium Confidence", "Implicated in classical-like EDS and rare connective tissue disorders."),
+    "rs652722": ("Medium Confidence", "Similar to rs1063325, with possible roles in EDS and autoimmune conditions."),
+    "rs1815739": ("Low Confidence", "Affects muscle function; commonly studied in athletic performance."),
+    "rs7308816": ("Low Confidence", "Variant of ACTN3, linked to fast-twitch muscle fiber efficiency."),
+    "rs6944656": ("Medium Confidence", "Associated with QT-interval modulation and possible autonomic dysfunction."),
+    "rs28931567": ("Medium Confidence", "Similar to rs6944656; limited evidence for POTS or MCAS association."),
+    "rs1805007": ("High Confidence", "Common red-hair variant; sometimes associated with altered pain sensitivity."),
+    "rs4680": ("High Confidence", "Affects dopamine metabolism and cognitive function (COMT gene)."),
+    "rs6323": ("Medium Confidence", "Influences monoamine metabolism, possibly affecting ADHD risk."),
+    "rs25531": ("Medium Confidence", "Impacts serotonin transporter function."),
+    "rs1800955": ("High Confidence", "DRD4 promoter SNP; associated with ADHD and cognitive traits."),
+    "rs3729984": ("Medium Confidence", "GABRA2 variant studied for psychiatric and addiction traits."),
+    "rs769449": ("Medium Confidence", "APOE variant known for potential links to Alzheimer's and neurodegeneration."),
+    "rs1042522": ("Low Confidence", "p53 gene variant occasionally studied in autoimmune and neurodegenerative conditions."),
+    "rs731236": ("Medium Confidence", "Vitamin D receptor variant, with possible links to autoimmune conditions."),
+    "rs2075800": ("Medium Confidence", "HSP70 variant linked to inflammatory response modulation."),
+    "rs12252": ("Low Confidence", "IFITM3 variant known for viral infection susceptibility."),
+    "rs1080985": ("Low Confidence", "TAS2R38 variant associated with bitter taste perception; may influence food preferences."),
+    "rs4988235": ("Low Confidence", "OCA2 variant linked to skin pigmentation and possibly autoimmune susceptibility."),
+    "rs1805015": ("Low Confidence", "MC1R variant associated with skin and hair pigmentation; may influence pain sensitivity."),
+    "rs2229303": ("Low Confidence", "SLC24A4 variant linked to skin pigmentation and possibly autoimmune conditions."),
+    "rs12896399": ("Low Confidence", "HERC2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility."),
+    "rs1393350": ("Low Confidence", "SLC24A5 variant linked to skin pigmentation and possibly autoimmune conditions."),
+    "rs1800414": ("Low Confidence", "OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility."),
+    "rs1805009": ("Low Confidence", "MC1R variant linked to skin and hair pigmentation; may influence pain sensitivity."),
+    "rs2228488": ("Low Confidence", "SLC24A4 variant associated with skin pigmentation and possibly autoimmune conditions."),
+    "rs11150614": ("Low Confidence", "PRSS53 variant linked to skin pigmentation and possibly autoimmune conditions."),
+    "rs1800401": ("Low Confidence", "OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility."),
+    "rs1800407": ("Low Confidence", "OCA2 variant associated with skin and eye pigmentation; may influence autoimmune susceptibility."),
+    "rs12498609": ("Medium Confidence", "Neanderthal-derived variant linked to immune system regulation; function not fully understood."),
+    "rs1156361": ("Medium Confidence", "Neanderthal-derived variant in the TLR1 gene; may influence innate immune response."),
+    "rs4846049": ("Low Confidence", "Neanderthal-derived variant in the STAT2 gene; function poorly understood."),
+    "rs1881227": ("Medium Confidence", "Neanderthal-derived variant in the KLF4 gene; may play a role in skin barrier function."),
+    "rs1260326": ("Medium Confidence", "Neanderthal-derived variant in the GCKR gene; associated with metabolic traits."),
+    "rs3795061": ("Low Confidence", "Neanderthal-derived variant in the SLC16A11 gene; linked to type 2 diabetes risk."),
+    "rs9303521": ("Low Confidence", "Neanderthal-derived variant in the POU2F3 gene; function not fully understood."),
+    "rs10490770": ("Medium Confidence", "Neanderthal-derived variant in the SLC6A11 gene; may influence neurotransmitter transport."),
+    "rs1042658": ("Low Confidence", "Neanderthal-derived variant in the HYAL2 gene; function poorly understood."),
+    "rs12191877": ("Medium Confidence", "Neanderthal-derived variant in the FOXP2 gene; may influence speech and language development."),
+    "rs10013927": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs10477613": ("Low Confidence", "May influence visual perception and processing speed."),
+    "rs10521422": ("Medium Confidence", "Associated with auditory processing and language development."),
+    "rs10734515": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs10833250": ("Medium Confidence", "Linked to cognitive flexibility and problem-solving ability."),
+    "rs10927880": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs11090765": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs11249053": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs11347702": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs11550499": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs11610106": ("Medium Confidence", "Associated with visual perception and processing speed."),
+    "rs11704115": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs11843595": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs12124819": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs12278743": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs12325567": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs12411045": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs12509864": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs12604783": ("Medium Confidence", "Associated with visual perception and processing speed."),
+    "rs12728265": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs12822717": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs12900589": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs13004413": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs13131026": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs13274337": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs13401138": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs1352025": ("Medium Confidence", "Associated with visual perception and processing speed."),
+    "rs1369904": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs1384586": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs1407447": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs1427763": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs1433848": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs1453624": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs1460592": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs1472417": ("Medium Confidence", "Associated with visual perception and processing speed."),
+    "rs1483418": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs1501933": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs1511792": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs1520324": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs1531612": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs1540017": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs1552424": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs1561582": ("Medium Confidence", "Associated with visual perception and processing speed."),
+    "rs1573212": ("Low Confidence", "Possible role in olfactory perception and processing."),
+    "rs1580173": ("Medium Confidence", "Linked to cognitive function, particularly attention and working memory."),
+    "rs1590103": ("Low Confidence", "May influence tactile perception and sensory processing."),
+    "rs1600247": ("Medium Confidence", "Associated with visual-spatial skills and mental rotation."),
+    "rs1610403": ("Low Confidence", "Possible role in cognitive processing speed and attention."),
+    "rs1621913": ("Medium Confidence", "Linked to auditory working memory and language processing."),
+    "rs1630298": ("Low Confidence", "May influence cognitive flexibility and executive function."),
+    "rs1801157": ("Medium Confidence", "COL3A1 gene variant associated with EDS type IV."),
+    "rs2274703": ("Low Confidence", "COL5A1 gene variant linked to classical EDS."),
+    "rs17165664": ("Medium Confidence", "COL5A2 gene variant associated with classical EDS."),
+    "rs1042074": ("Low Confidence", "COL1A1 gene variant linked to EDS and osteoporosis."),
+    "rs1063325": ("Medium Confidence", "TNXB gene variant associated with classical-like EDS."),
+    "rs11556924": ("Medium Confidence", "Height and skeletal growth, potential link to EDS."),
+    "rs1801252": ("Medium Confidence", "ADRB1 gene variant linked to POTS and autonomic dysfunction."),
+    "rs1805015": ("Low Confidence", "MC1R gene variant associated with POTS and skin pigmentation."),
+    "rs2229303": ("Low Confidence", "SLC24A4 gene variant linked to POTS and skin pigmentation."),
+    "rs12190992": ("Medium Confidence", "NOS1AP gene variant associated with POTS and QT-interval modulation."),
+    "rs12401481": ("Medium Confidence", "COMT gene variant linked to POTS and autonomic dysfunction."),
+    "rs4307059": ("Medium Confidence", "CDH9 gene variant associated with autism and social behavior."),
+    "rs4307059": ("Medium Confidence", "SHANK3 gene variant linked to autism and intellectual disability."),
+    "rs11765443": ("Low Confidence", "SLC6A4 gene variant associated with autism and serotonin transport."),
+    "rs1858830": ("Medium Confidence", "OXTR gene variant linked to autism and social behavior."),
+    "rs2298585": ("Low Confidence", "ITGB3 gene variant associated with autism and platelet function."),
+    "rs1800955": ("High Confidence", "DRD4 gene variant linked to ADHD, autism, and cognitive traits."),
+    "rs4680": ("High Confidence", "COMT gene variant associated with ADHD, autism, and cognitive traits."),
+    "rs6323": ("Medium Confidence", "SLC6A3 gene variant linked to ADHD and autism risk."),
+    "rs25531": ("Medium Confidence", "SLC6A4 gene variant associated with serotonin transport and autism risk."),
+    "rs1048101": ("Medium Confidence", "ADRA1A gene variant linked to autonomic dysfunction and ADHD risk."),
+    "rs35044562": ("Medium Confidence", "Neanderthal-derived SNP within the risk haplotype on chromosome 3 associated with increased risk for severe COVID-19; further studies are needed to clarify its functional role."),
+		"rs10774671": ("Medium Confidence", "Neanderthal-derived variant in the OAS1 gene that influences alternative splicing and antiviral responses; has been linked in some studies to COVID-19 outcomes, pending further validation."),
+		"rs5743810": ("Medium Confidence", "Neanderthal-derived variant in the TLR6 gene; may contribute to modulation of innate immune responses against pathogens; functional effects remain under investigation."),
+		"rs4129009": ("Low Confidence", "Putative Neanderthal-derived variant in the TLR10 gene; preliminary data suggest it might affect inflammatory signaling, but more research is required."),
+		"rs1868092": ("High Confidence", "Denisovan-derived variant in the EPAS1 gene associated with high-altitude adaptation in Tibetan populations."),
+		"rs6754295": ("Medium Confidence", "Candidate Denisovan-derived SNP in the EPAS1 region; may influence hypoxia response in high-altitude environments, pending further studies."),
+		"rs4953354": ("Medium Confidence", "Putative Denisovan-derived variant in the EPAS1 region; its functional impact on oxygen homeostasis is under investigation."),
+		"rs2293607": ("Medium Confidence", "Candidate Denisovan-derived SNP in the TBX15/WARS2 region; potential role in body fat distribution and cold adaptation, subject to further validation.")
+    
+}
 
-# Function to generate a unique ID based on file hash and salt
-def generate_unique_id(file_path, salt):
-    sha1 = hashlib.sha1()
-    sha1.update(salt.encode('utf-8'))
-    with open(file_path, 'rb') as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            sha1.update(chunk)
-    return sha1.hexdigest()
+# --------------------------------------------------
+# Function to Calculate Neanderthal DNA Score
+# --------------------------------------------------
+def calculate_neanderthal_score(user_snps):
+    """
+    Calculates the Neanderthal score based on how many
+    of the listed NEANDERTHAL_SNPS appear in the user's data.
+    """
+    score = 0
+    for rs_id, (confidence, _) in NEANDERTHAL_SNPS.items():
+        if rs_id in user_snps:
+            score += CONFIDENCE_WEIGHTS[confidence]
+    return score
 
+# --------------------------------------------------
+# Main Function
+# --------------------------------------------------
 def main():
     user_file = input("Enter the path to your 23andMe raw data TXT file: ").strip()
     if not os.path.isfile(user_file):
         print(f"ERROR: File not found: {user_file}")
         return
-    
-    unique_id = generate_unique_id(user_file, "caveman")
+
+    # Read entire file as bytes for hashing
+    with open(user_file, "rb") as f:
+        file_contents = f.read()
+
+    # Create a SHA-1 hash object with the salt "caveman"
+    hash_obj = hashlib.sha1()
+    hash_obj.update("caveman".encode("utf-8"))  # Salting
+    hash_obj.update(file_contents)
+    unique_id = hash_obj.hexdigest()
     print(f"Generated Unique ID: {unique_id}")
-    
-    snps_of_interest = parse_snp_csv(CSV_DATA)
-    
-    user_snps = {}
+
+    # Parse user SNPs in text mode
+    user_snps = set()
     with open(user_file, "r", encoding="utf-8") as f:
         for line in f:
             if line.startswith("#"):
                 continue
             parts = line.strip().split()
-            if len(parts) < 4:
-                continue
-            rs_id = parts[0]
-            genotype = parts[3]
-            user_snps[rs_id] = genotype
-    
-    # Group the SNPs by gene
-    gene_map = defaultdict(list)
-    for rs_id, info in snps_of_interest.items():
-        gene_map[info["Gene"]].append((rs_id, info))
-    
-    # Sort genes alphabetically for the table
-    sorted_genes = sorted(gene_map.keys())
-    
-    # -----------------------------------------------------------
-    # Generate the HTML Report with Dark/Modern styling
-    # -----------------------------------------------------------
-    html_lines = []
-    html_lines.append("<!DOCTYPE html>")
-    html_lines.append("<html lang='en'>")
-    html_lines.append("<head>")
-    html_lines.append("  <meta charset='UTF-8' />")
-    html_lines.append(f"  <title>🧬Modern Neanderthal Sensitivity Report - {unique_id}🧬</title>")
-    # --- New dark/modern style block:
-    html_lines.append("""
-    <style>
-      /* Basic Reset */
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      * {
-        box-sizing: border-box;
-      }
+            if len(parts) >= 4:
+                user_snps.add(parts[0])
 
-      /* Body: Dark Fluent-Inspired */
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #0D0D0D, #1C1C1C);
-        color: #ECECEC;
-        animation: fadeIn 0.8s ease-in-out forwards;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
+    # Calculate Neanderthal score
+    score = calculate_neanderthal_score(user_snps)
 
-      /* Container */
-      .container {
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 20px 30px;
-        background-color: #242424;
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      }
+    # -------------------------------------------------------------------
+    # Prepare data for both HTML and JSON
+    # -------------------------------------------------------------------
+    # 1) Table Rows for HTML
+    # 2) Structured data for JSON
 
-      h1, h2, h3 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #00FFC6; /* teal-like color for headings */
-      }
+    snp_rows_html = ""
+    snp_list_json = []
 
-      p {
-        margin-bottom: 15px;
-        line-height: 1.5;
-      }
+    for rs_id, (confidence, description) in NEANDERTHAL_SNPS.items():
+        present = rs_id in user_snps
+        present_str_html = "<span style='color: #BBF7D0; font-weight: bold;'>TRUE</span>" if present else "<span style='color: #FF6F6F; font-weight: bold;'>FALSE</span>"
+        snp_rows_html += f"<tr><td>{rs_id}</td><td>{present_str_html}</td><td>{description}</td></tr>"
 
-      /* Table Styles */
-      table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin-bottom: 40px;
-        overflow: hidden;
-        border-radius: 8px;
-        background-color: #2C2C2C;
-      }
+        snp_list_json.append({
+            "rs_id": rs_id,
+            "confidence": confidence,
+            "description": description,
+            "present": present
+        })
 
-      th, td {
-        padding: 14px 16px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #00FFC6;
-        color: #1B1B1B;
-        font-weight: 600;
-      }
-
-      tr:nth-child(even) td {
-        background-color: #2A2A2A;
-      }
-
-      tr:hover td {
-        background-color: #373737;
-      }
-
-      /* "Present"/"Missing" color styles */
-      .present {
-        color: #BBF7D0;
-        font-weight: bold;
-      }
-      .missing {
-        color: #FF6F6F;
-        font-weight: bold;
-      }
-
-      /* Footer / End of Report */
-      .footer {
-        text-align: center;
-        margin-top: 20px;
-        font-style: italic;
-        color: #888;
-      }
-    </style>
-    """)
-    html_lines.append("</head>")
-
-    html_lines.append("<body>")
-    html_lines.append("<div class='container'>")
-
-    html_lines.append(f"<h1>🧬Modern Neanderthal Sensitivity Report🧬</h1>")
-    html_lines.append(f"<h2>Unique ID: {unique_id}</h2>")
-
-    html_lines.append("<p>This report examines selected SNPs (Single Nucleotide Polymorphisms) in your 23andMe data. Each SNP has a unique identifier (rsID) and corresponds to a specific location in your genome. Your <strong>genotype</strong> shows the two variants of DNA you inherited at that location.</p>")
-    html_lines.append("<p><strong>Important:</strong> This report is for educational purposes only. It is not a substitute for professional genomic testing or medical advice. Consult a qualified healthcare professional for interpretation and guidance.</p>")
-
-    # Build the tables by gene
-    for gene in sorted_genes:
-        html_lines.append(f"<h3>Gene: {gene}</h3>")
-        html_lines.append("<table>")
-        html_lines.append("""
-          <tr>
-            <th>rsID</th>
-            <th>Conditions</th>
-            <th>Present?</th>
-            <th>Genotype</th>
-            <th>Evidence/Status</th>
-            <th>Ancestry Note</th>
-            <th>Notes</th>
-          </tr>
-        """)
-        # Sort by rsID
-        gene_map[gene].sort(key=lambda x: x[0])
-        for rs_id, info in gene_map[gene]:
-            present = rs_id in user_snps
-            genotype = user_snps[rs_id] if present else "NOT FOUND"
-
-            # color-coded "Present" / "Missing"
-            presence_str = (
-                "<span class='present'>Present</span>"
-                if present else
-                "<span class='missing'>Missing</span>"
-            )
-
-            row_html = f"""
-            <tr>
-                <td>{rs_id}</td>
-                <td>{info['Conditions']}</td>
-                <td>{presence_str}</td>
-                <td>{genotype}</td>
-                <td>{info['Evidence']}</td>
-                <td>{info['Ancestry']}</td>
-                <td>{info['Notes']}</td>
-            </tr>
-            """
-            html_lines.append(row_html)
-        html_lines.append("</table>")
-
-    html_lines.append("<div class='footer'>")
-    html_lines.append("<hr />")
-    html_lines.append("<p><em>End of Report</em></p>")
-    html_lines.append("</div>")
-
-    html_lines.append("</div>")  # close container
-    html_lines.append("</body></html>")
-
-    report_html = "\n".join(html_lines)
-    
     # -----------------------------------------------------------
     #  Create JSON object
     # -----------------------------------------------------------
-    json_report = {"UniqueID": unique_id}
-    for gene in sorted_genes:
-        gene_map[gene].sort(key=lambda x: x[0])
-        snp_list = []
-        for rs_id, info in gene_map[gene]:
-            present = rs_id in user_snps
-            genotype = user_snps[rs_id] if present else "NOT FOUND"
-            record = {
-                "rsID": rs_id,
-                "Conditions": info["Conditions"],
-                "PresentIn23andMe": present,
-                "Genotype": genotype,
-                "EvidenceStatus": info["Evidence"],
-                "AncestryNote": info["Ancestry"],
-                "Notes": info["Notes"],
-            }
-            snp_list.append(record)
-        json_report[gene] = snp_list
+    json_data = {
+        "unique_id": unique_id,
+        "score": score,
+        "total_snps_tested": len(NEANDERTHAL_SNPS),
+        "snps": snp_list_json
+    }
 
     # -----------------------------------------------------------
-    # Save the reports
+    # Generate HTML Report (Dark/Modern Theme)
+    # -----------------------------------------------------------
+    html_content = f"""
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+      <meta charset='UTF-8' />
+      <title>🦴 Neanderthal DNA Estimator Report 🦴</title>
+      <style>
+        /* Basic Reset */
+        html, body {{
+          margin: 0;
+          padding: 0;
+        }}
+        * {{
+          box-sizing: border-box;
+        }}
+
+        /* Body: Dark Fluent-Inspired */
+        body {{
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, #0D0D0D, #1C1C1C);
+          color: #ECECEC;
+          animation: fadeIn 0.8s ease-in-out forwards;
+        }}
+        @keyframes fadeIn {{
+          from {{ opacity: 0; }}
+          to {{ opacity: 1; }}
+        }}
+
+        /* Container */
+        .container {{
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 20px 30px;
+          background-color: #242424;
+          border-radius: 10px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }}
+
+        h1, h2, h3 {{
+          text-align: center;
+          margin-bottom: 20px;
+          color: #00FFC6;
+        }}
+
+        /* Score Paragraph */
+        .score {{
+          font-size: 1.2rem;
+          text-align: center;
+          margin-bottom: 30px;
+          color: #BBF7D0;
+        }}
+
+        /* Table Styles */
+        table {{
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          margin-bottom: 40px;
+          overflow: hidden;
+          border-radius: 8px;
+          background-color: #2C2C2C;
+        }}
+
+        th, td {{
+          padding: 14px 16px;
+          text-align: left;
+        }}
+
+        th {{
+          background-color: #00FFC6;
+          color: #1B1B1B;
+          font-weight: 600;
+        }}
+
+        tr:nth-child(even) td {{
+          background-color: #2A2A2A;
+        }}
+
+        tr:hover td {{
+          background-color: #373737;
+        }}
+
+        /* Footer / End of Report */
+        .footer {{
+          text-align: center;
+          margin-top: 20px;
+          font-style: italic;
+          color: #888;
+        }}
+      </style>
+    </head>
+    <body>
+    <div class="container">
+      <h1>🦴 Neanderthal DNA Estimator 🦴</h1>
+      <h2>Unique ID: {unique_id}</h2>
+      <p class="score"><strong>Your Neanderthal Score:</strong> {score} / {len(NEANDERTHAL_SNPS)}</p>
+
+      <h3>All Tested SNPs</h3>
+      <table>
+          <tr><th>rsID</th><th>Gene Present in 23&Me Data?</th><th>Description</th></tr>
+          {snp_rows_html}
+      </table>
+
+      <div class="footer">
+        <hr />
+        <p><em>End of Report</em></p>
+      </div>
+    </div>
+    </body></html>
+    """
+
+    # -----------------------------------------------------------
+    # Save Outputs (HTML + JSON) to Downloads folder
     # -----------------------------------------------------------
     downloads_dir = os.path.join(os.path.expanduser("~"), "Downloads")
-    html_report_path = os.path.join(downloads_dir, f"ND-Sensitivity-Report-{unique_id}.html")
-    with open(html_report_path, "w", encoding="utf-8") as f:
-        f.write(report_html)
+    base_filename = f"Neanderthal-DNA-Estimate-{unique_id}"
 
-    json_report_path = os.path.join(downloads_dir, f"ND-Sensitivity-Report-{unique_id}.json")
-    with open(json_report_path, "w", encoding="utf-8") as jf:
-        json.dump(json_report, jf, indent=2)
+    # 1) HTML
+    html_report_path = os.path.join(downloads_dir, base_filename + ".html")
+    with open(html_report_path, "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    # 2) JSON
+    json_report_path = os.path.join(downloads_dir, base_filename + ".json")
+    with open(json_report_path, "w", encoding="utf-8") as f:
+        json.dump(json_data, f, ensure_ascii=False, indent=2)
 
     print(f"\nHTML report saved to: {html_report_path}")
-    print(f"JSON report saved to: {json_report_path}")
+    print(f"JSON data saved to: {json_report_path}")
 
-    # Open HTML report in the default browser
+    # Open the HTML report automatically
     webbrowser.open("file://" + html_report_path)
-
 
 if __name__ == "__main__":
     main()
