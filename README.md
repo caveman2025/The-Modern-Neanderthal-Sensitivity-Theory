@@ -269,7 +269,7 @@ However, none of this matters if we can't make it available globally and easy to
 
 ## Example HTML Output
 
-![Report Example](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/blob/main/.github/report.png?raw=true "Report Example")
+![Report Example](https://github.com/caveman2025/The-Modern-Neanderthal-Sensitivity-Theory/blob/main/.github/report.png?raw=true)
 
 &nbsp;
 
