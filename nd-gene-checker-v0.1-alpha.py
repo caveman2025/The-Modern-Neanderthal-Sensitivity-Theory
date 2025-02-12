@@ -10,9 +10,9 @@ import json
 # Updated Confidence Weighting System
 # --------------------------------------------------
 CONFIDENCE_WEIGHTS = {
-    "High Confidence": 4,
+    "High Confidence": 5,
     "Medium Confidence": 3,
-    "Low Confidence": 2,
+    "Low Confidence": 1,
 }
 
 # --------------------------------------------------
@@ -29,7 +29,7 @@ NEANDERTHAL_SNPS = {
     "rs199475201": ("High Confidence", "Located in the PAH gene; associated with PKU and hyperphenylalaninemia."),
     "rs199475203": ("High Confidence", "PAH gene variant; pathogenic variant associated with PKU."),
     "rs199475204": ("High Confidence", "Located in the PAH gene; linked to PKU and related disorders."),
-    "rs199475205": ("High Confidence", "PAH gene variant; associated with classic PKU."),
+    "rs199475205": ("High Confidence", "PAH gene variant; associated with classic PKU."),
     "rs113578744": ("High Confidence", "Affects tryptase levels, possibly influencing MCAS-like symptoms."),
     "rs140863677": ("High Confidence", "Strongly linked to hereditary alpha tryptasemia, a trait inherited from Neanderthals."),
     "rs1048101": ("Medium Confidence", "Impacts adrenergic receptors, potentially affecting autonomic function."),
@@ -160,14 +160,13 @@ NEANDERTHAL_SNPS = {
     "rs25531": ("Medium Confidence", "SLC6A4 gene variant associated with serotonin transport and autism risk."),
     "rs1048101": ("Medium Confidence", "ADRA1A gene variant linked to autonomic dysfunction and ADHD risk."),
     "rs35044562": ("Medium Confidence", "Neanderthal-derived SNP within the risk haplotype on chromosome 3 associated with increased risk for severe COVID-19; further studies are needed to clarify its functional role."),
-		"rs10774671": ("Medium Confidence", "Neanderthal-derived variant in the OAS1 gene that influences alternative splicing and antiviral responses; has been linked in some studies to COVID-19 outcomes, pending further validation."),
-		"rs5743810": ("Medium Confidence", "Neanderthal-derived variant in the TLR6 gene; may contribute to modulation of innate immune responses against pathogens; functional effects remain under investigation."),
-		"rs4129009": ("Low Confidence", "Putative Neanderthal-derived variant in the TLR10 gene; preliminary data suggest it might affect inflammatory signaling, but more research is required."),
-		"rs1868092": ("High Confidence", "Denisovan-derived variant in the EPAS1 gene associated with high-altitude adaptation in Tibetan populations."),
-		"rs6754295": ("Medium Confidence", "Candidate Denisovan-derived SNP in the EPAS1 region; may influence hypoxia response in high-altitude environments, pending further studies."),
-		"rs4953354": ("Medium Confidence", "Putative Denisovan-derived variant in the EPAS1 region; its functional impact on oxygen homeostasis is under investigation."),
-		"rs2293607": ("Medium Confidence", "Candidate Denisovan-derived SNP in the TBX15/WARS2 region; potential role in body fat distribution and cold adaptation, subject to further validation.")
-    
+    "rs10774671": ("Medium Confidence", "Neanderthal-derived variant in the OAS1 gene that influences alternative splicing and antiviral responses; has been linked in some studies to COVID-19 outcomes, pending further validation."),
+    "rs5743810": ("Medium Confidence", "Neanderthal-derived variant in the TLR6 gene; may contribute to modulation of innate immune responses against pathogens; functional effects remain under investigation."),
+    "rs4129009": ("Low Confidence", "Putative Neanderthal-derived variant in the TLR10 gene; preliminary data suggest it might affect inflammatory signaling, but more research is required."),
+    "rs1868092": ("High Confidence", "Denisovan-derived variant in the EPAS1 gene associated with high-altitude adaptation in Tibetan populations."),
+    "rs6754295": ("Medium Confidence", "Candidate Denisovan-derived SNP in the EPAS1 region; may influence hypoxia response in high-altitude environments, pending further studies."),
+    "rs4953354": ("Medium Confidence", "Putative Denisovan-derived variant in the EPAS1 region; its functional impact on oxygen homeostasis is under investigation."),
+    "rs2293607": ("Medium Confidence", "Candidate Denisovan-derived SNP in the TBX15/WARS2 region; potential role in body fat distribution and cold adaptation, subject to further validation.")
 }
 
 # --------------------------------------------------
@@ -218,39 +217,79 @@ def main():
     score = calculate_neanderthal_score(user_snps)
 
     # -------------------------------------------------------------------
-    # Prepare data for both HTML and JSON
+    # Group SNPs by Confidence Level
     # -------------------------------------------------------------------
-    # 1) Table Rows for HTML
-    # 2) Structured data for JSON
-
-    snp_rows_html = ""
-    snp_list_json = []
-
+    high_conf_snps = []
+    med_conf_snps = []
+    low_conf_snps = []
+    
     for rs_id, (confidence, description) in NEANDERTHAL_SNPS.items():
         present = rs_id in user_snps
-        present_str_html = "<span style='color: #BBF7D0; font-weight: bold;'>TRUE</span>" if present else "<span style='color: #FF6F6F; font-weight: bold;'>FALSE</span>"
-        snp_rows_html += f"<tr><td>{rs_id}</td><td>{present_str_html}</td><td>{description}</td></tr>"
-
-        snp_list_json.append({
+        entry = {
             "rs_id": rs_id,
             "confidence": confidence,
             "description": description,
             "present": present
-        })
+        }
+        if confidence == "High Confidence":
+            high_conf_snps.append(entry)
+        elif confidence == "Medium Confidence":
+            med_conf_snps.append(entry)
+        elif confidence == "Low Confidence":
+            low_conf_snps.append(entry)
 
-    # -----------------------------------------------------------
-    #  Create JSON object
-    # -----------------------------------------------------------
+    # -------------------------------------------------------------------
+    # Explanation text for confidence ratings
+    # -------------------------------------------------------------------
+    confidence_explanation_html = """
+    <p>
+      <strong>Confidence Ratings Explanation:</strong> In this report each SNP is assigned a confidence rating based on the strength of the evidence supporting its association.
+      <ul>
+        <li><strong>High Confidence:</strong> Strong, well-replicated evidence from multiple studies.</li>
+        <li><strong>Medium Confidence:</strong> Moderate evidence that may require further validation.</li>
+        <li><strong>Low Confidence:</strong> Preliminary or limited evidence, indicating that further research is needed.</li>
+      </ul>
+    </p>
+    """
+
+    confidence_explanation_json = (
+        "In this report each SNP is assigned a confidence rating based on the strength of the evidence supporting its association. "
+        "High Confidence indicates strong, well-replicated evidence; Medium Confidence indicates moderate evidence that may require further validation; "
+        "and Low Confidence indicates preliminary or limited evidence."
+    )
+
+    # -------------------------------------------------------------------
+    # Prepare HTML sections for each confidence level
+    # -------------------------------------------------------------------
+    def generate_table_rows(snp_list):
+        rows = ""
+        for snp in snp_list:
+            present_str = "<span style='color: #BBF7D0; font-weight: bold;'>TRUE</span>" if snp["present"] else "<span style='color: #FF6F6F; font-weight: bold;'>FALSE</span>"
+            rows += f"<tr><td>{snp['rs_id']}</td><td>{snp['confidence']}</td><td>{present_str}</td><td>{snp['description']}</td></tr>"
+        return rows
+
+    high_conf_rows = generate_table_rows(high_conf_snps)
+    med_conf_rows = generate_table_rows(med_conf_snps)
+    low_conf_rows = generate_table_rows(low_conf_snps)
+
+    # -------------------------------------------------------------------
+    # Create JSON object with SNPs organized by confidence level
+    # -------------------------------------------------------------------
     json_data = {
         "unique_id": unique_id,
         "score": score,
         "total_snps_tested": len(NEANDERTHAL_SNPS),
-        "snps": snp_list_json
+        "confidence_explanation": confidence_explanation_json,
+        "snps_by_confidence": {
+            "High Confidence": high_conf_snps,
+            "Medium Confidence": med_conf_snps,
+            "Low Confidence": low_conf_snps
+        }
     }
 
-    # -----------------------------------------------------------
-    # Generate HTML Report (Dark/Modern Theme)
-    # -----------------------------------------------------------
+    # -------------------------------------------------------------------
+    # Generate HTML Report (Dark/Modern Theme) with sections per confidence level
+    # -------------------------------------------------------------------
     html_content = f"""
     <!DOCTYPE html>
     <html lang='en'>
@@ -266,7 +305,6 @@ def main():
         * {{
           box-sizing: border-box;
         }}
-
         /* Body: Dark Fluent-Inspired */
         body {{
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -278,7 +316,6 @@ def main():
           from {{ opacity: 0; }}
           to {{ opacity: 1; }}
         }}
-
         /* Container */
         .container {{
           max-width: 900px;
@@ -288,13 +325,11 @@ def main():
           border-radius: 10px;
           box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }}
-
         h1, h2, h3 {{
           text-align: center;
           margin-bottom: 20px;
           color: #00FFC6;
         }}
-
         /* Score Paragraph */
         .score {{
           font-size: 1.2rem;
@@ -302,7 +337,6 @@ def main():
           margin-bottom: 30px;
           color: #BBF7D0;
         }}
-
         /* Table Styles */
         table {{
           width: 100%;
@@ -313,26 +347,21 @@ def main():
           border-radius: 8px;
           background-color: #2C2C2C;
         }}
-
         th, td {{
           padding: 14px 16px;
           text-align: left;
         }}
-
         th {{
           background-color: #00FFC6;
           color: #1B1B1B;
           font-weight: 600;
         }}
-
         tr:nth-child(even) td {{
           background-color: #2A2A2A;
         }}
-
         tr:hover td {{
           background-color: #373737;
         }}
-
         /* Footer / End of Report */
         .footer {{
           text-align: center;
@@ -347,11 +376,40 @@ def main():
       <h1>🦴 Neanderthal DNA Estimator 🦴</h1>
       <h2>Unique ID: {unique_id}</h2>
       <p class="score"><strong>Your Neanderthal Score:</strong> {score} / {len(NEANDERTHAL_SNPS)}</p>
-
-      <h3>All Tested SNPs</h3>
+      
+      {confidence_explanation_html}
+      
+      <h3>High Confidence SNPs</h3>
       <table>
-          <tr><th>rsID</th><th>Gene Present in 23&Me Data?</th><th>Description</th></tr>
-          {snp_rows_html}
+          <tr>
+            <th>rsID</th>
+            <th>Confidence</th>
+            <th>Present in 23&amp;Me Data?</th>
+            <th>Description</th>
+          </tr>
+          {high_conf_rows}
+      </table>
+      
+      <h3>Medium Confidence SNPs</h3>
+      <table>
+          <tr>
+            <th>rsID</th>
+            <th>Confidence</th>
+            <th>Present in 23&amp;Me Data?</th>
+            <th>Description</th>
+          </tr>
+          {med_conf_rows}
+      </table>
+      
+      <h3>Low Confidence SNPs</h3>
+      <table>
+          <tr>
+            <th>rsID</th>
+            <th>Confidence</th>
+            <th>Present in 23&amp;Me Data?</th>
+            <th>Description</th>
+          </tr>
+          {low_conf_rows}
       </table>
 
       <div class="footer">
@@ -362,18 +420,18 @@ def main():
     </body></html>
     """
 
-    # -----------------------------------------------------------
+    # -------------------------------------------------------------------
     # Save Outputs (HTML + JSON) to Downloads folder
-    # -----------------------------------------------------------
+    # -------------------------------------------------------------------
     downloads_dir = os.path.join(os.path.expanduser("~"), "Downloads")
     base_filename = f"Neanderthal-DNA-Estimate-{unique_id}"
 
-    # 1) HTML
+    # Save HTML Report
     html_report_path = os.path.join(downloads_dir, base_filename + ".html")
     with open(html_report_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    # 2) JSON
+    # Save JSON Report
     json_report_path = os.path.join(downloads_dir, base_filename + ".json")
     with open(json_report_path, "w", encoding="utf-8") as f:
         json.dump(json_data, f, ensure_ascii=False, indent=2)
